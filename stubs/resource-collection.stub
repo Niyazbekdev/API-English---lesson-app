@@ -1,0 +1,24 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+/**
+ * @method total()
+ * @method perPage()
+ * @method currentPage()
+ * @method lastPage()
+ */
+
+class {{ class }} extends ResourceCollection
+{
+
+    public function toArray(Request $request): array
+    {
+        return [
+            //
+        ];
+    }
+}

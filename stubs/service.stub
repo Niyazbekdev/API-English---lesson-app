@@ -1,0 +1,26 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\Question;
+use App\Services\BaseServices;
+use Illuminate\Validation\ValidationException;
+
+class {{class}} extends BaseServices
+{
+    public function rules(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function execute(array $data): bool
+    {
+        $this->validate($data);
+        return true;
+    }
+}
