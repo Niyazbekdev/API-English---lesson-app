@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\User\LoginUser;
+use App\Services\admin\User\LoginUser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
