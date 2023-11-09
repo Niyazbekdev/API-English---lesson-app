@@ -23,13 +23,13 @@ class ShowQuestion extends BaseServices
     public function execute(array $data)
     {
         $this->validate($data);
-        $question = Question::where('id', $data['id'])->first();
+        $question = Question::findOrFail($data['id']);
         if(!$question){
             return response([
                 'message' => 'question not found',
             ]);
         }else{
-            return $question;
+            return [$question];
         }
     }
 }

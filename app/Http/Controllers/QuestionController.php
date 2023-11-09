@@ -2,43 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QuestionCollection;
 use App\Http\Resources\QuestionResource;
 use App\Services\admin\question\CreateQuestion;
 use App\Services\admin\question\DeleteQuestion;
 use App\Services\admin\question\IndexQuestion;
 use App\Services\admin\question\ShowQuestion;
+use App\Traits\JsonRespondController;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class QuestionController extends Controller
 {
-    public function index()
+    use JsonRespondController;
+    public function index(Request $request): JsonResponse|QuestionCollection
     {
         try {
-            $question = app(IndexQuestion::class)->execute([]);
-            return QuestionResource::collection($question);
+            $question = app(IndexQuestion::class)->execute($request->data);
+            return new QuestionCollection($question);
         }catch (ValidationException $exception){
-            return $exception->validator->errors()->all();
+            return $this->respondValidatorFailed($exception->validator);
         }
     }
 
-    public function store(Request $request): QuestionResource
+    public function store(Request $request): JsonResponse
     {
         try {
-            $question = app(CreateQuestion::class)->execute($request->all());
-            return new QuestionResource($question);
+            app(CreateQuestion::class)->execute($request->all());
+            return $this->respondSuccess();
         }catch (ValidationException $exception){
-            return $exception->validator->errors()->all();
+            return $this->respondValidatorFailed($exception->validator);
         }
     }
 
     public function show( string $question)
     {
         try {
-            $arr = app(ShowQuestion::class)->execute([
+            [$questions] = app(ShowQuestion::class)->execute([
                 'id' => $question
             ]);
-            return new QuestionResource($arr);
+            return new QuestionResource($questions);
         }catch (ValidationException $exception){
             return $exception->validator->errors()->all();
         }
