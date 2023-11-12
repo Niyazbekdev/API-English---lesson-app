@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\admin\question;
+namespace App\Services\admin;
 
 use App\Models\Question;
 use App\Services\BaseServices;
@@ -20,16 +20,10 @@ class ShowQuestion extends BaseServices
      * @throws ValidationException
      * @throws ModelNotFoundException
      */
-    public function execute(array $data)
+    public function execute(array $data): array
     {
         $this->validate($data);
         $question = Question::findOrFail($data['id']);
-        if(!$question){
-            return response([
-                'message' => 'question not found',
-            ]);
-        }else{
-            return [$question];
-        }
+        return [$question];
     }
 }

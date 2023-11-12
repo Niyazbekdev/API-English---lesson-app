@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+
 
 class QuestionResource extends JsonResource
 {
@@ -13,7 +14,7 @@ class QuestionResource extends JsonResource
         return [
             'id' => $this->id,
             'question' => $this->question,
-            'answers'=> AnswerResource::collection($this->whenLoaded('answers')),
+            'answers' => AnswerResource::collection($this->answers)
         ];
     }
 }

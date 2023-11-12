@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\admin\User\LoginUser;
+use App\Services\admin\LoginAdmin;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -12,7 +13,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-            [$user, $token] = app(LoginUser::class)->execute($request->all());
+            [$user, $token] = app(LoginAdmin::class)->execute($request->all());
             return [
                 'data' => [
                     'id' => $user->id,
@@ -24,7 +25,7 @@ class UserController extends Controller
             return response([
                 'errors' => $exception->validator->errors()->all()
             ]);
-        }catch (\Exception $exception){
+        }catch (Exception $exception){
             if($exception->getCode() == 401){
                 return response([
                     'errors' => $exception->getMessage()

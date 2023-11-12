@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Services\admin\answer;
+namespace App\Services\admin;
 
 use App\Models\Answer;
 use App\Services\BaseServices;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
 class DeleteAnswer extends BaseServices
@@ -17,6 +18,7 @@ class DeleteAnswer extends BaseServices
 
     /**
      * @throws ValidationException
+     * @throws ModelNotFoundException
      */
     public function execute(array $data): bool
     {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\admin\answer\DeleteAnswer;
+use App\Services\admin\DeleteAnswer;
 use App\Traits\JsonRespondController;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

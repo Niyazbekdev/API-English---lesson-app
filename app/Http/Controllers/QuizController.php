@@ -2,41 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\QuestionCollection;
-use App\Http\Resources\QuestionResource;
-use App\Services\admin\question\CreateQuestion;
-use App\Services\admin\question\DeleteQuestion;
-use App\Services\admin\question\IndexQuestion;
-use App\Services\admin\question\ShowQuestion;
+use App\Http\Resources\Admin\QuestionCollection;
+use App\Http\Resources\Admin\QuestionResource;
+use App\Models\Quiz;
+use App\Services\admin\CreateQuestion;
+use App\Services\admin\DeleteQuestion;
+use App\Services\admin\IndexQuestion;
+use App\Services\admin\ShowQuestion;
 use App\Traits\JsonRespondController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class QuestionController extends Controller
+class QuizController extends Controller
 {
     use JsonRespondController;
-    public function index(Request $request): JsonResponse|QuestionCollection
+    public function index(Quiz $quiz): JsonResponse|QuestionCollection
     {
         try {
-            $question = app(IndexQuestion::class)->execute($request->data);
+            $question = app(IndexQuestion::class)->execute([], $quiz);
             return new QuestionCollection($question);
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
         }
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request, Quiz $quiz): JsonResponse
     {
         try {
-            app(CreateQuestion::class)->execute($request->all());
+            app(CreateQuestion::class)->execute($request->all(), $quiz);
             return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
         }
     }
 
-    public function show( string $question)
+    public function show( string $question, Quiz $quiz)
     {
         try {
             [$questions] = app(ShowQuestion::class)->execute([

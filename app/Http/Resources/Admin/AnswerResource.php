@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -12,7 +12,6 @@ class AnswerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'question_id' => $this->question_id,
             'answer' => $this->answer,
             'is_correct' => $this->is_correct,
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\admin\User;
+namespace App\Services\admin;
 
 use App\Models\User;
 use App\Services\BaseServices;
@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class LoginUser extends BaseServices
+class LoginAdmin extends BaseServices
 {
     public function rules(): array
     {
@@ -26,8 +26,9 @@ class LoginUser extends BaseServices
     {
         $this->validate($data);
         $user = User::where('phone', $data['phone'])->first();
-//        dd(1);
-        if(!$user or !Hash::check($data['password'], $user->password)){
+        $password = Hash::check($data['password'], $user->password);
+
+        if(!$user or !$password){
             throw new Exception('user not found or password in correct', 401);
         }
 

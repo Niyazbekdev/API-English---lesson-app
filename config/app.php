@@ -186,4 +186,7 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    // token limit
+    'expiration' => 1440,
+
 ];

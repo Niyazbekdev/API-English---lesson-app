@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Services\admin\question;
+namespace App\Services\admin;
 
+use App\Models\Answer;
 use App\Models\Question;
 use App\Services\BaseServices;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
 class DeleteQuestion extends BaseServices
@@ -17,11 +19,16 @@ class DeleteQuestion extends BaseServices
 
     /**
      * @throws ValidationException
+     * @throws ModelNotFoundException
      */
     public function execute(array $data): bool
     {
         $this->validate($data);
-        $question = Question::where('id', $data['id'])->first();
+        $question = Question::findOrFail($data['id']);
+        $answers = Answer::where('question_id', $data['id'])->get();
+        foreach ($answers as $answer){
+            Answer::find($answer['id'])->delete();
+        }
         $question->delete();
         return true;
     }
