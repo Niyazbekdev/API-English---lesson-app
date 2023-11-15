@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ModulResource;
 use App\Models\Modul;
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+use App\Services\user\IndexModul;
+use App\Traits\JsonRespondController;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ModulController extends Controller
 {
-    public function index()
+    use JsonRespondController;
+    public function index(): AnonymousResourceCollection
     {
-        return Modul::all();
+        $module = Modul::with('lessons')->get();
+        return ModulResource::collection($module);
     }
 }

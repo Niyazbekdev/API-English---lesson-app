@@ -2,7 +2,6 @@
 
 namespace App\Services\admin;
 
-use App\Models\Answer;
 use App\Models\Quiz;
 use App\Services\BaseServices;
 use Illuminate\Validation\ValidationException;
@@ -16,7 +15,10 @@ class CreateQuestion extends BaseServices
             'answers' => "nullable|array",
             'answers.*.answer' => "required_unless:answers,null",
             'answers.*.is_correct' => "required_unless:answers,null|boolean",
-            'help' => "required"
+            'answers.*.position' => "required_unless:answers,null",
+            'answers.*.drag_text' => "required_unless:answers,null",
+            'help' => "required",
+            'question_type_id' => 'required|exists:question_types,id',
         ];
     }
 
@@ -26,18 +28,45 @@ class CreateQuestion extends BaseServices
     public function execute(array $data, Quiz $quiz): bool
     {
         $this->validate($data);
-        $quiz->questions()->create([
+        $question = $quiz->questions()->create([
             'question' => $data['question'],
             'help' => $data['help']
         ]);
 
-        foreach ($data['answers'] as $answer) {
-            Answer::create([
-                'question_id' => 2,
-                'answer' => $answer['answer'],
-                'is_correct' => $answer['is_correct'],
-            ]);
-
+        if($data['question_type_id'] == 1) // simple
+        {
+            foreach ($data['answers'] as $answer) {
+                $question->answers()->create([
+                    'answer' => $answer['answer'],
+                    'is_correct' => $answer['is_correct'],
+                ]);
+            }
+        }else if($data['question_type_id'] == 2) // Multiple choice
+        {
+            foreach ($data['answers'] as $answer) {
+                $question->answers()->create([
+                    'answer' => $answer['answer'],
+                    'is_correct' => $answer['is_correct'], // birneshe is correct
+                ]);
+            }
+        }else if($data['question_type_id'] == 3) // Sequence
+        {
+            foreach ($data['answers'] as $answer) {
+                $question->answers()->create([
+                    'answer' => $answer['answer'],
+                    'position' => $answer['position'],
+                    'is_correct' => $answer['is_correct'], // barligi true boliw kerek yamasa is correct null buliw kerek
+                ]);
+            }
+        }else if($data['question_type_id'] == 4) // Drag and drop
+        {
+            foreach ($data['answers'] as $answer) {
+                $question->answers()->create([
+                    'answer' => $answer['answer'],
+                    'drag_text' => $answer['drag_text'],
+                    'is_correct' => $answer['is_correct'], // barligi true boliw kerek yamasa is correct null buliw kerek
+                ]);
+            }
         }
         return true;
     }

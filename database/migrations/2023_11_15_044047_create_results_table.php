@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained('users');
             $table->foreignIdFor(Question::class)->constrained('questions');
-            $table->foreignIdFor(Answer::class)->constrained('answers');
             $table->boolean('is_correct');
             $table->timestamps();
         });

@@ -9,16 +9,15 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('question_types', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
+            $table->string('name');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('contents');
+        Schema::dropIfExists('question_types');
     }
 };

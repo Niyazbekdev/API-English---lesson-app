@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('question');
             $table->morphs('questionable');
-            $table->integer('question_type_id')->nullable();
+            $table->foreignId('question_type_id')->constrained();
             $table->text('help')->nullable();
             $table->timestamps();
         });

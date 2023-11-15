@@ -14,6 +14,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Question::class)->constrained('questions');
             $table->string('answer');
+            $table->unsignedTinyInteger('position')->nullable();
+            $table->string('drag_text')->nullable();
             $table->boolean('is_correct');
             $table->timestamps();
         });
