@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Admin\QuestionCollection;
-use App\Http\Resources\Admin\QuestionResource;
+use App\Http\Resources\QuestionCollection;
+use App\Http\Resources\QuestionResource;
 use App\Models\Quiz;
 use App\Services\admin\CreateQuestion;
 use App\Services\admin\DeleteQuestion;
-use App\Services\admin\IndexQuestion;
 use App\Services\admin\ShowQuestion;
+use App\Services\user\IndexQuestion;
 use App\Traits\JsonRespondController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

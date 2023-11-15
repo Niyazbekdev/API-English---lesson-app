@@ -21,11 +21,11 @@ class RegisterUser extends BaseServices
     /**
      * @throws ValidationException
      */
-    public function execute(array $data)
+    public function execute(array $data): array
     {
         $this->validate($data);
         $code = rand(111111, 999999);
-        User::create([
+        $user = User::create([
             'phone' => $data['phone'],
             'verification_code' => Hash::make($code),
         ]);
@@ -35,9 +35,8 @@ class RegisterUser extends BaseServices
                     'code' => $code,
                 ])
         );
-        return response([
-            'success' => true,
-            'message' => 'telefonizga bargan smsti kiritin'
-        ]);
+
+        $token = $user->CreateToken('user model', ['admin'])->plainTextToken;
+        return [$user,$token];
     }
 }

@@ -12,7 +12,15 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         try {
-            return app(RegisterUser::class)->execute($request->all());
+            [$user, $token] = app(RegisterUser::class)->execute($request->all());
+            return [
+                'data'=> [
+                    'phone' => $user->phone,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                    'token' => $token,
+                ]
+            ];
         }catch (ValidationException $exception){
             return $exception->validator->errors()->all();
         }
@@ -32,5 +40,10 @@ class AuthController extends Controller
         }catch (ValidationException $exception){
             return $exception->validator->errors()->all();
         }
+    }
+
+    public function login(Request $request)
+    {
+        //
     }
 }

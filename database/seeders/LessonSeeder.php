@@ -19,5 +19,13 @@ class LessonSeeder extends Seeder
             ]
         ]);
 
+        Lesson::create([
+            'modul_id' => 1,
+            'title' => [
+                'latin' => "dawisli sesler",
+                'kiril' => "дауыслы сеслер"
+            ]
+        ]);
+
     }
 }
