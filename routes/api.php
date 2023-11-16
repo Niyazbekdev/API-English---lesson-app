@@ -4,7 +4,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModulController;
-use App\Http\Controllers\ModulQuestionController;
+use App\Http\Controllers\LessonQuestionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::apiResources([
         'moduls' => ModulController::class,
         'answers' => AnswerController::class,
-        'moduls.questions' => ModulQuestionController::class,
+        'lessons.questions' => LessonQuestionController::class,
         'quizzes' => QuizController::class,
         'quizzes.questions' => QuizQuestionController::class,
         'questions' => QuestionController::class,

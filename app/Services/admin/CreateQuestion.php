@@ -12,6 +12,7 @@ class CreateQuestion extends BaseServices
     {
         return [
             'question' => "required",
+            'questionable_id' => 'required|',
             'answers' => "nullable|array",
             'answers.*.answer' => "required_unless:answers,null",
             'answers.*.is_correct' => "required_unless:answers,null|boolean",

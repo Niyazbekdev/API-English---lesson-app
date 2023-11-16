@@ -1,25 +1,30 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Services\admin;
 
+use App\Models\Lesson;
 use App\Services\BaseServices;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
-class {{class}} extends BaseServices
+class DeleteLesson extends BaseServices
 {
     public function rules(): array
     {
         return [
-            //
+            'id' => 'exists:lessons,id'
         ];
     }
 
     /**
      * @throws ValidationException
+     * @throws ModelNotFoundException
      */
     public function execute(array $data): bool
     {
         $this->validate($data);
+        $lesson = Lesson::findOrFail($data['id']);
+        $lesson->delete();
         return true;
     }
 }
