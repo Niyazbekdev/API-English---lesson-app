@@ -2,33 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionRequest;
 use App\Http\Resources\QuestionCollection;
-use App\Http\Resources\QuestionResource;
+
 use App\Models\Quiz;
-use App\Services\admin\CreateQuestion;
-use App\Services\admin\DeleteQuestion;
-use App\Services\admin\ShowQuestion;
-use App\Services\user\IndexQuestion;
+use App\Services\QuizQuestion;
+use App\Traits\JsonRespondController;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class QuizQuestionController extends Controller
 {
-    public function index(Quiz $quiz): JsonResponse|QuestionCollection
+    use JsonRespondController;
+
+    public function __construct(
+        protected QuizQuestion $quizQuestion
+    )
     {
-        try {
-            $question = app(IndexQuestion::class)->execute([], $quiz);
-            return new QuestionCollection($question);
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
     }
 
-    public function store(Request $request, Quiz $quiz): JsonResponse
+    public function index(Quiz $quiz): QuestionCollection
+    {
+       $questions = $this->quizQuestion->getQuestion($quiz);
+       return new QuestionCollection($questions);
+    }
+
+    public function store(QuestionRequest $request, Quiz $quiz): JsonResponse
     {
         try {
-            app(CreateQuestion::class)->execute($request->all());
+            $this->quizQuestion->add($request->all(), $quiz);
             return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);

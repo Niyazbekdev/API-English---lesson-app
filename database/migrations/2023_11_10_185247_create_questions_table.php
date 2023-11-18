@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
+            $table->string('title');
             $table->morphs('questionable');
             $table->foreignId('question_type_id')->constrained();
             $table->text('help')->nullable();

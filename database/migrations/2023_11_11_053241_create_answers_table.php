@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('answer');
             $table->unsignedTinyInteger('position')->nullable();
             $table->string('drag_text')->nullable();
-            $table->boolean('is_correct');
+            $table->boolean('is_correct')->nullable();
             $table->timestamps();
         });
     }

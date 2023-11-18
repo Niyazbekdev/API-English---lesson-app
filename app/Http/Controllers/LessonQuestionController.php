@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\QuestionResource;
 use App\Models\Lesson;
-use App\Services\admin\CreateQuestion;
+use App\Services\admin\CreateLessonQuestion;
 use App\Traits\JsonRespondController;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -13,13 +13,11 @@ class LessonQuestionController extends Controller
 {
     use JsonRespondController;
 
-    public function store(Lesson $lesson)
+    public function store(Request $request, Lesson $lesson): JsonResponse
     {
         try {
-            $questions = app(CreateQuestion::class)->execute([
-                'questionable_id' => $lesson,
-            ]);
-            return new QuestionResource($questions);
+            app(CreateLessonQuestion::class)->execute($request->all(), $lesson);
+            return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
         }

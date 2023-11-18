@@ -15,6 +15,10 @@ class QuizSeeder extends Seeder
                'latin' => "Daslepki test",
                'kiril' => "даслепки тест"
            ],
+            'description' => [
+                'latin' => 'descirption',
+                'kiril' => 'дескриптион'
+            ]
         ]);
     }
 }

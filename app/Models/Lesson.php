@@ -25,4 +25,9 @@ class Lesson extends Model
         return $this->belongsTo(Modul::class);
     }
 
+    public function lesson_type(): BelongsTo
+    {
+        return $this->belongsTo(TypeLesson::class);
+    }
+
 }

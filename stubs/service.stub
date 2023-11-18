@@ -2,24 +2,8 @@
 
 namespace {{ namespace }};
 
-use App\Services\BaseServices;
-use Illuminate\Validation\ValidationException;
 
-class {{class}} extends BaseServices
+class {{class}} extends
 {
-    public function rules(): array
-    {
-        return [
-            //
-        ];
-    }
 
-    /**
-     * @throws ValidationException
-     */
-    public function execute(array $data): bool
-    {
-        $this->validate($data);
-        return true;
-    }
 }

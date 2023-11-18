@@ -15,7 +15,8 @@ class LessonSeeder extends Seeder
             'title' => [
                 'latin' => "inglis alipbesi",
                 'kiril' => "инглис алипбеси"
-            ]
+            ],
+            'type_lesson_id' => 1,
         ]);
 
         Lesson::create([
@@ -23,7 +24,8 @@ class LessonSeeder extends Seeder
             'title' => [
                 'latin' => "dawisli sesler",
                 'kiril' => "дауыслы сеслер"
-            ]
+            ],
+            'type_lesson_id' => 1,
         ]);
 
     }

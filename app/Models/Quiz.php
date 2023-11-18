@@ -11,7 +11,9 @@ class Quiz extends Model
 {
     use HasFactory, HasTranslations;
 
-    public array $translatable = ["title"];
+    protected $fillable = ['title', 'description'];
+
+    public array $translatable = ["title", "description"];
 
     public function questions(): MorphMany
     {
