@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\QuestionResource;
+use App\Models\Question;
 use App\Services\Question\DeleteQuestion;
 use App\Services\Question\IndexQuestion;
 use App\Services\Question\ShowQuestion;
@@ -23,11 +24,11 @@ class QuestionController extends Controller
         }
     }
 
-    public function show(string $question)
+    public function show(Question $question)
     {
         try {
             $questions = app(ShowQuestion::class)->execute([
-                'id' => $question,
+                'id' => $option,
             ]);
             return new QuestionResource($questions);
         }catch (ValidationException $exception){

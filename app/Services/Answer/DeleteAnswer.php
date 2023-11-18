@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\admin;
+namespace App\Services\Answer;
 
 use App\Models\Answer;
 use App\Services\BaseServices;
