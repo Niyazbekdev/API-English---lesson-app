@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\LessonResource;
-use App\Services\admin\CreateLesson;
-use App\Services\admin\DeleteLesson;
-use App\Services\user\IndexLesson;
-use App\Services\user\ShowLesson;
+use App\Models\Modul;
+use App\Services\Lesson\CreateLesson;
+use App\Services\Lesson\DeleteLesson;
+use App\Services\Lesson\IndexLesson;
+use App\Services\Lesson\ShowLesson;
 use App\Traits\JsonRespondController;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,10 +20,10 @@ class LessonController extends Controller
 {
     use JsonRespondController;
 
-    public function index(Request $request): Collection|JsonResponse
+    public function index(Modul $modul): Collection|JsonResponse
     {
         try {
-            return app(IndexLesson::class)->execute($request->all());
+            return app(IndexLesson::class)->execute($modul);
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
         }
@@ -40,10 +41,10 @@ class LessonController extends Controller
         }
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request, Modul $modul): JsonResponse
     {
         try {
-            app(CreateLesson::class)->execute($request->all());
+            app(CreateLesson::class)->execute($request->all(), $modul);
             return $this->respondSuccess();
         }  catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);

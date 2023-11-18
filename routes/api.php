@@ -23,10 +23,11 @@ Route::middleware(['auth:sanctum'])->group(function (){
         'quizzes' => QuizController::class,
         'quizzes.questions' => QuizQuestionController::class,
         'questions' => QuestionController::class,
-        'questions.answers' => AnswerController::class,
         'moduls' => ModulController::class,
-        'lessons' => LessonController::class,
         'lessons.questions' => LessonQuestionController::class,
         'result' => ResultController::class,
     ]);
+
+    Route::apiResource('moduls.lessons', LessonController::class)->shallow();
+    Route::apiResource('questions.answers', AnswerController::class)->shallow();
 });

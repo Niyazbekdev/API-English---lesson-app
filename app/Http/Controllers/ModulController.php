@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ModulResource;
 use App\Models\Modul;
-use App\Services\user\IndexModul;
 use App\Traits\JsonRespondController;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class ModulController extends Controller
 {
     use JsonRespondController;
-    public function index(): AnonymousResourceCollection
+    public function index(): Collection
     {
-        $module = Modul::with('lessons')->get();
-        return ModulResource::collection($module);
+        return  Modul::all(['id', 'title', 'created_at', 'updated_at']);
+    }
+
+    public function store(Request $request)
+    {
+
     }
 }

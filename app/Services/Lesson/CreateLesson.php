@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services\admin;
+namespace App\Services\Lesson;
 
 use App\Models\Lesson;
+use App\Models\Modul;
 use App\Services\BaseServices;
 use Illuminate\Validation\ValidationException;
 
@@ -11,20 +12,22 @@ class CreateLesson extends BaseServices
     public function rules(): array
     {
         return [
-            'modul_id' => 'required',
+            'modul_id' => 'required,exists:moduls,id',
             'title' => 'required',
+            'type_lesson_id' => 'required'
         ];
     }
 
     /**
      * @throws ValidationException
      */
-    public function execute(array $data): bool
+    public function execute(array $data, Modul $modul): bool
     {
-        Lesson::create([
-            'modul_id' => $data['modul_id'],
+        $this->validate($data);
+        $modul->lessons()->create([
+            'modul_id' => $modul['id'],
             'title' => $data['title'],
-            'type_id' => 1
+            'type_lesson_id' => $data['type_lesson_id']
         ]);
         return true;
     }

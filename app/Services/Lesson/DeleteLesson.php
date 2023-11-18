@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services\admin;
+namespace App\Services\Lesson;
 
 use App\Models\Lesson;
+use App\Models\Modul;
 use App\Services\BaseServices;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;

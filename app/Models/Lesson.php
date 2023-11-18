@@ -12,7 +12,7 @@ class Lesson extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ["modul_id", "title", "type_id"];
+    protected $fillable = ["modul_id", "title", "type_lesson_id"];
 
     public array $translatable = ["title"];
 

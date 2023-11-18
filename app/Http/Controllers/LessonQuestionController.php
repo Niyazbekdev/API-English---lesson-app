@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
-use App\Services\admin\CreateLessonQuestion;
+use App\Services\Lesson\CreateLessonQuestion;
 use App\Traits\JsonRespondController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

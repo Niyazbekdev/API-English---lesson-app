@@ -2,35 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\QuestionResource;
-use App\Models\Question;
 use App\Services\Question\DeleteQuestion;
-use App\Services\Question\IndexQuestion;
-use App\Services\Question\ShowQuestion;
+use App\Services\Question\UpdateQuestion;
 use App\Traits\JsonRespondController;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class QuestionController extends Controller
 {
     use JsonRespondController;
-    public function index(Request $request)
+
+    public function update(Request $request, string $question): JsonResponse
     {
         try {
-            return  app(IndexQuestion::class)->execute($request->all());
-
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
-    }
-
-    public function show(Question $question)
-    {
-        try {
-            $questions = app(ShowQuestion::class)->execute([
-                'id' => $option,
+            app(UpdateQuestion::class)->execute([
+                'id' => $question,
+                'question_type_id' => $request->question_type_id,
+                'title' => $request->title,
+                'help' => $request->help,
             ]);
-            return new QuestionResource($questions);
+            return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
         }

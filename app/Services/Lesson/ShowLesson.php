@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\user;
+namespace App\Services\Lesson;
 
 use App\Models\Lesson;
-use App\Models\Question;
 use App\Services\BaseServices;
 use Illuminate\Validation\ValidationException;
 
