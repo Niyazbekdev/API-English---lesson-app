@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\QuestionCollection;
 use App\Http\Resources\QuestionResource;
-use App\Services\admin\DeleteQuestion;
-use App\Services\admin\ShowQuestion;
-use App\Services\user\IndexQuestion;
+use App\Services\Question\DeleteQuestion;
+use App\Services\Question\IndexQuestion;
+use App\Services\Question\ShowQuestion;
 use App\Traits\JsonRespondController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -17,8 +16,8 @@ class QuestionController extends Controller
     public function index(Request $request)
     {
         try {
-            $questions = app(IndexQuestion::class)->execute($request->all());
-            return QuestionCollection::collection($questions);
+            return  app(IndexQuestion::class)->execute($request->all());
+
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
         }
