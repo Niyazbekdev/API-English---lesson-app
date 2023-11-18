@@ -2,17 +2,17 @@
 
 namespace App\Services\Answer;
 
-
 use App\Models\Answer;
-use App\Models\Question;
 use App\Services\BaseServices;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
-class CreateAnswer extends BaseServices
+class UpdateAnswer extends BaseServices
 {
     public function rules(): array
     {
         return [
+            'id' => 'exists:answers,id',
             'answer' => 'required',
             'drag_text' => 'nullable',
             'is_correct' => 'nullable',
@@ -21,15 +21,18 @@ class CreateAnswer extends BaseServices
 
     /**
      * @throws ValidationException
+     * @throws ModelNotFoundException
      */
-    public function execute($data, Question $question)
+
+    public function execute(array $data): bool
     {
         $this->validate($data);
-        Answer::create([
-           'question_id' =>  $question['id'],
+        $answer = Answer::findOrFail($data['id']);
+        $answer->update([
             'answer' => $data['answer'],
             'drag_text' => $data['drag_text'],
             'is_correct' => $data['is_correct'],
         ]);
+        return true;
     }
 }

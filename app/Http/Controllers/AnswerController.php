@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Services\Answer\CreateAnswer;
 use App\Services\Answer\DeleteAnswer;
+use App\Services\Answer\UpdateAnswer;
 use App\Traits\JsonRespondController;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +18,8 @@ class AnswerController extends Controller
 {
     use JsonRespondController;
 
-    public function index(Question $question){
+    public function index(Question $question): Collection
+    {
         return $question->answers()->get();
     }
 
@@ -24,6 +27,21 @@ class AnswerController extends Controller
     {
         try {
             app(CreateAnswer::class)->execute($request->all(),$question);
+            return $this->respondSuccess();
+        }catch (ValidationException $exception){
+            return $this->respondValidatorFailed($exception->validator);
+        }
+    }
+
+    public function update(Request $request, string $answer): JsonResponse
+    {
+        try {
+            app(UpdateAnswer::class)->execute([
+                'id' => $answer,
+                'answer' => $request->answer,
+                'drag_text' => $request->drag_text,
+                'is_correct' => $request->is_correct,
+            ]);
             return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
