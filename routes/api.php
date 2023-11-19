@@ -8,6 +8,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\LessonQuestionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionOptionController;
 use App\Http\Controllers\QuizController;
@@ -31,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
         'result' => ResultController::class,
         'images' => ImageController::class,
         'audios' => AudioController::class,
+        'notifications' => NotificationController::class,
     ]);
 
     Route::apiResource('moduls.lessons', LessonController::class)->shallow();
