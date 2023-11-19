@@ -16,7 +16,7 @@ class TypeLessonSeeder extends Seeder
         ]);
 
         TypeLesson::create([
-            'title' => 'soraw'
+            'title' => 'content'
         ]);
     }
 }

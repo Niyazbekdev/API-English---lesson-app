@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModulController;
@@ -33,5 +34,6 @@ Route::middleware(['auth:sanctum'])->group(function (){
     ]);
 
     Route::apiResource('moduls.lessons', LessonController::class)->shallow();
+    Route::apiResource('lessons.contents', ContentController::class)->shallow();
     Route::apiResource('questions.answers', AnswerController::class)->shallow();
 });
