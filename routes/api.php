@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\AudioController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LessonController;
@@ -27,7 +28,8 @@ Route::middleware(['auth:sanctum'])->group(function (){
         'moduls' => ModulController::class,
         'lessons.questions' => LessonQuestionController::class,
         'result' => ResultController::class,
-        'images' => ImageController::class
+        'images' => ImageController::class,
+        'audios' => AudioController::class,
     ]);
 
     Route::apiResource('moduls.lessons', LessonController::class)->shallow();

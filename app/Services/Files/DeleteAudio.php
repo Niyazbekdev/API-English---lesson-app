@@ -2,18 +2,18 @@
 
 namespace App\Services\Files;
 
-use App\Models\Image;
+use App\Models\Audio;
 use App\Services\BaseServices;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
-class DeleteFile extends BaseServices
+class DeleteAudio extends BaseServices
 {
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:images,id'
+            'id' => 'required|exists:audio,id'
         ];
     }
 
@@ -26,10 +26,10 @@ class DeleteFile extends BaseServices
     {
         $this->validate($data);
 
-        $image = Image::findOrFail($data['id']);
-        $image->delete();
+        $audio = Audio::findOrFail($data['id']);
+        $audio->delete();
 
-        Storage::disk('public')->delete($image['path']);
+        Storage::disk('public')->delete($audio['path']);
 
         return true;
     }

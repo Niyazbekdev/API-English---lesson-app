@@ -2,18 +2,18 @@
 
 namespace App\Services\Files;
 
-use App\Models\Image;
+use App\Models\Audio;
 use App\Services\BaseServices;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
-class DeleteFile extends BaseServices
+class UploadAudio extends BaseServices
 {
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:images,id'
+            'name' => 'array',
+            'name.*.' => 'file|mimes:mpeg,mpga,mp3,wav|max:4048'
         ];
     }
 
@@ -26,10 +26,16 @@ class DeleteFile extends BaseServices
     {
         $this->validate($data);
 
-        $image = Image::findOrFail($data['id']);
-        $image->delete();
+        foreach ($data['name'] as $item){
+            $name = "Audio-" . $item->hashName();
 
-        Storage::disk('public')->delete($image['path']);
+            $path = $item->store('audios', 'public');
+
+            Audio::create([
+                'name' => $name,
+                'path' => $path,
+            ]);
+        }
 
         return true;
     }

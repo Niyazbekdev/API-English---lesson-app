@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\QuestionRequest;
 use App\Http\Resources\QuestionCollection;
-
 use App\Models\Quiz;
-use App\Services\QuizQuestion;
+use App\Services\Quiz\QuizQuestion;
 use App\Traits\JsonRespondController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;

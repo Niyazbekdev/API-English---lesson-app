@@ -12,7 +12,7 @@ class Uploadfile extends BaseServices
     public function rules(): array
     {
         return [
-            'images' => 'nullable|array',
+            'images' => 'required|array',
             'images.*' => 'file|mimes:jpg,bmp,png|max:2048'
         ];
     }
@@ -25,10 +25,12 @@ class Uploadfile extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
-//        dd($data);
+
         foreach($data['images'] as $image){
             $name = "image-" . $image->hashName();
+
             $path = $image->store('images', 'public');
+
             Image::create([
                 'image' => $name,
                 'path' => $path,
