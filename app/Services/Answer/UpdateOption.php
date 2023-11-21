@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Services\Files;
+namespace App\Services\Answer;
 
-use App\Models\Audio;
+use App\Models\Answer;
 use App\Services\BaseServices;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
-class UploadAudio extends BaseServices
+class UpdateOption extends BaseServices
 {
     public function rules(): array
     {
         return [
-            'name' => 'array',
-            'name.*.' => 'file|mimes:mpeg,mpga,mp3,wav|max:4048'
+            'answers' => 'array',
+            'answers.*.' => 'numeric',
         ];
     }
 
@@ -25,17 +25,15 @@ class UploadAudio extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+        $i = 0;
 
-        foreach ($data['name'] as $item){
-            $name = $item->hashName();
-
-            $item->store('audios', 'public');
-
-            Audio::create([
-                'name' => $name,
+        foreach ($data['answers'] as $answer_id){
+            Answer::where('id', $answer_id)->update([
+                'position' => $i,
             ]);
-        }
 
+            $i++;
+        }
         return true;
     }
 }

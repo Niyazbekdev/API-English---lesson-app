@@ -29,7 +29,7 @@ class RegisterUser extends BaseServices
             'phone' => $data['phone'],
             'verification_code' => Hash::make($code),
         ]);
-        Mail::to('hasilsultamuratov08@gmail.com')->send(
+        Mail::to('niyazbekk001@gmail.com')->send(
             new WelcomeMail([
                     'name' => 'Salem Hasil',
                     'code' => $code,

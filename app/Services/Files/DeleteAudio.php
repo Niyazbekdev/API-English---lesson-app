@@ -27,9 +27,10 @@ class DeleteAudio extends BaseServices
         $this->validate($data);
 
         $audio = Audio::findOrFail($data['id']);
-        $audio->delete();
 
-        Storage::disk('public')->delete($audio['path']);
+        Storage::disk('public')->delete('audios/' . $audio['name']);
+
+        $audio->delete();
 
         return true;
     }

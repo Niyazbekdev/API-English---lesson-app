@@ -27,9 +27,10 @@ class DeleteFile extends BaseServices
         $this->validate($data);
 
         $image = Image::findOrFail($data['id']);
-        $image->delete();
 
-        Storage::disk('public')->delete($image['path']);
+        Storage::disk('public')->delete('images/' . $image['image']);
+
+        $image->delete();
 
         return true;
     }

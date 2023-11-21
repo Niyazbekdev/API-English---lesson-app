@@ -6,6 +6,7 @@ use App\Models\Question;
 use App\Services\Answer\CreateAnswer;
 use App\Services\Answer\DeleteAnswer;
 use App\Services\Answer\UpdateAnswer;
+use App\Services\Answer\UpdateOption;
 use App\Traits\JsonRespondController;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -62,6 +63,19 @@ class AnswerController extends Controller
         }catch (Exception $exception){
             $this->setHttpStatusCode($exception->getCode());
             return $this->respondWithError($exception->getMessage());
+        }
+    }
+
+    public function option(Request $request, string $id)
+    {
+        try {
+            app(UpdateOption::class)->execute([
+                'id' => $id,
+                'answers' => $request->answers,
+            ]);
+            return $this->respondSuccess();
+        }catch (ValidationException $exception){
+            return $this->respondValidatorFailed($exception->validator);
         }
     }
 }

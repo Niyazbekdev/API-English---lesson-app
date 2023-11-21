@@ -44,4 +44,6 @@ class User extends Authenticatable
             set: fn(string $value) => strtolower($value),
         );
     }
+
+
 }

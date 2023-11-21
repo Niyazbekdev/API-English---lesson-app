@@ -27,13 +27,12 @@ class Uploadfile extends BaseServices
         $this->validate($data);
 
         foreach($data['images'] as $image){
-            $name = "image-" . $image->hashName();
+            $name = $image->hashName();
 
-            $path = $image->store('images', 'public');
+            $image->store('images', 'public');
 
             Image::create([
                 'image' => $name,
-                'path' => $path,
             ]);
         }
 

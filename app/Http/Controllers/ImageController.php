@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PhotoRequest;
+use App\Http\Resources\ImageResource;
 use App\Models\Image;
 use App\Services\Files\DeleteFile;
 use App\Services\Files\Uploadfile;
@@ -15,9 +16,9 @@ use Illuminate\Validation\ValidationException;
 class ImageController extends Controller
 {
     use JsonRespondController;
-    public function index(): Collection
+    public function index()
     {
-        return Image::all();
+        return ImageResource::collection(Image::all());
     }
     public function store(Request $request): JsonResponse
     {
