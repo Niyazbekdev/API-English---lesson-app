@@ -24,12 +24,17 @@ class DeleteQuestion extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         $question = Question::findOrFail($data['id']);
+
         $answers = Answer::where('question_id', $data['id'])->get();
+
         foreach ($answers as $answer){
             Answer::find($answer['id'])->delete();
         }
+
         $question->delete();
+
         return true;
     }
 }

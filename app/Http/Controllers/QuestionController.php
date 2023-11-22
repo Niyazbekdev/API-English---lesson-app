@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\Question\DeleteQuestion;
 use App\Services\Question\UpdateQuestion;
 use App\Traits\JsonRespondController;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -25,20 +27,28 @@ class QuestionController extends Controller
             return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
+        }catch (ModelNotFoundException){
+            return $this->respondNotFound();
+        }catch (Exception $exception){
+            $this->setHttpStatusCode($exception->getCode());
+            return $this->respondError($exception->getMessage());
         }
     }
 
-    public function destroy(string $question)
+    public function destroy(string $question): JsonResponse
     {
         try {
             app(DeleteQuestion::class)->execute([
                 'id' => $question,
             ]);
-            return response([
-                'Success' => true
-            ]);
+            return $this->respondSuccess();
         }catch (ValidationException $exception){
-            return $exception->validator->errors()->all();
+            return $this->respondValidatorFailed($exception->validator);
+        }catch (ModelNotFoundException){
+            return $this->respondNotFound();
+        }catch (Exception $exception){
+            $this->setHttpStatusCode($exception->getCode());
+            return $this->respondError($exception->getMessage());
         }
     }
 }

@@ -12,9 +12,9 @@ class Modul extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ["title"];
+    protected $fillable = ['title', 'description'];
 
-    public array $translatable = ["title"];
+    public array $translatable = ['title', 'description'];
 
     public function lessons(): HasMany
     {

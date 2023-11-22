@@ -14,6 +14,10 @@ class ModulSeeder extends Seeder
             'title' => [
                 'latin' => "beginner",
                 'kiril' => "бегиннер"
+            ],
+            'description' => [
+                'latin' => "baslangish bilim",
+                'kiril' => "вшшулу"
             ]
         ]);
 
@@ -21,6 +25,10 @@ class ModulSeeder extends Seeder
             'title' => [
                 'latin' => "elementary",
                 'kiril' => "елементарий"
+            ],
+            'description' => [
+                'latin' => "baslangish bilim",
+                'kiril' => "вшшулу"
             ]
         ]);
 
@@ -28,6 +36,10 @@ class ModulSeeder extends Seeder
             'title' => [
                 'latin' => "Pre-Intermediate",
                 'kiril' => "Пре-интермедиате"
+            ],
+            'description' => [
+                'latin' => "baslangish bilim",
+                'kiril' => "вшшулу"
             ]
         ]);
 
@@ -35,6 +47,10 @@ class ModulSeeder extends Seeder
             'title' => [
                 'latin' => "Intermediate",
                 'kiril' => "интермедиате"
+            ],
+            'description' => [
+                'latin' => "baslangish bilim",
+                'kiril' => "вшшулу"
             ]
         ]);
 
@@ -42,6 +58,10 @@ class ModulSeeder extends Seeder
             'title' => [
                 'latin' => "Upper-Intermediate",
                 'kiril' => "уппер-интермедиате"
+            ],
+            'description' => [
+                'latin' => "baslangish bilim",
+                'kiril' => "вшшулу"
             ]
         ]);
 
@@ -49,6 +69,10 @@ class ModulSeeder extends Seeder
             'title' => [
                 'latin' => "Advanced",
                 'kiril' => "эдвенсед"
+            ],
+            'description' => [
+                'latin' => "baslangish bilim",
+                'kiril' => "вшшулу"
             ]
         ]);
     }

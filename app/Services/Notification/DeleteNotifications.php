@@ -26,6 +26,7 @@ class DeleteNotifications extends BaseServices
         $this->validate($data);
 
         $notification = Notification::findOrFail($data['id']);
+
         $notification->delete();
 
         return true;

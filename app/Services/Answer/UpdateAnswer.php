@@ -27,12 +27,15 @@ class UpdateAnswer extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         $answer = Answer::findOrFail($data['id']);
+
         $answer->update([
             'answer' => $data['answer'],
             'drag_text' => $data['drag_text'],
             'is_correct' => $data['is_correct'],
         ]);
+
         return true;
     }
 }

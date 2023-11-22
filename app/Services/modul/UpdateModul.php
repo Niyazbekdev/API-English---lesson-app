@@ -14,6 +14,7 @@ class UpdateModul extends BaseServices
         return [
             'id' => 'exists:moduls,id',
             'title' => 'required',
+            'description' => 'required',
         ];
     }
 
@@ -25,10 +26,14 @@ class UpdateModul extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         $modul = Modul::findOrFail($data['id']);
+
         $modul->update([
             'title' => $data['title'],
+            'description' => $data['description'],
         ]);
+
         return true;
     }
 }

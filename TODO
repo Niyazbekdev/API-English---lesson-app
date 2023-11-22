@@ -1,0 +1,20 @@
+Auth controller shala
+User controllerdi de durislaw kerek
+Result pustoy controller
+
+Lesson menen controllerdi durislaw kerek
+
+        $lessons = Lesson::where('modul_id',$data['id'])->get();
+
+        foreach ($lessons as $lesson){
+            Lesson::find($lesson['id'])->delete();
+
+            if($lesson['type_lesson_id'] == 2){
+                $contents = Content::where('lesson_id', $lesson['id']);
+
+                foreach ($contents as $content){
+                    Content::find($content['id'])->delete();
+                }
+            }
+        }
+

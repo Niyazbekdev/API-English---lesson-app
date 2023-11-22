@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LessonResource;
 use App\Models\Modul;
 use App\Services\Lesson\CreateLesson;
 use App\Services\Lesson\DeleteLesson;
-use App\Services\Lesson\IndexLesson;
-use App\Services\Lesson\ShowLesson;
 use App\Traits\JsonRespondController;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,23 +19,7 @@ class LessonController extends Controller
 
     public function index(Modul $modul): Collection|JsonResponse
     {
-        try {
-            return app(IndexLesson::class)->execute($modul);
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
-    }
-
-    public function show(string $lesson): LessonResource|JsonResponse
-    {
-        try {
-            $lessons = app(ShowLesson::class)->execute([
-                'id' => $lesson
-            ]);
-            return new LessonResource($lessons);
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
+        return $modul->lessons()->get();
     }
 
     public function store(Request $request, Modul $modul): JsonResponse

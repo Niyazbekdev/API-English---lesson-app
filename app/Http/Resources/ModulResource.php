@@ -13,6 +13,7 @@ class ModulResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->getTranslations("title"),
+            'description' => $this->getTranlsations("description"),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

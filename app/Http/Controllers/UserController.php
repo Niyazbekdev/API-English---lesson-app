@@ -4,20 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\admin\LoginAdmin;
+use App\Traits\JsonRespondController;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
 
+    use JsonRespondController;
+
     public function __construct()
     {
         $this->middleware('auth:sanctum')->only(['logOut']);
     }
 
-    public function store(Request $request)
+    public function login(Request $request): array|JsonResponse
     {
         try {
             [$user, $token] = app(LoginAdmin::class)->execute($request->all());
@@ -29,26 +33,17 @@ class UserController extends Controller
                 ]
             ];
         }catch (ValidationException $exception){
-            return response([
-                'errors' => $exception->validator->errors()->all()
-            ]);
+            return $this->respondValidatorFailed($exception->validator);
         }catch (Exception $exception){
-            if($exception->getCode() == 401){
-                return response([
-                    'errors' => $exception->getMessage()
-                ], $exception->getCode());
-            }
+            $this->setHttpStatusCode($exception->getCode());
+            return $this->respondError($exception->getMessage());
         }
     }
 
-    public function logOut(Request $request)
+    public function logOut(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
-        return response(['data' => 'user log out succesfully'],200);
+        return $this->respondSuccess();
     }
 
-    public function allUsers(): Collection
-    {
-        return User::all(['name', 'phone', 'created_at', 'updated_at']);
-    }
 }

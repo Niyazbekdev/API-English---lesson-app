@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ModulResource;
 use App\Models\Modul;
 use App\Services\modul\CreateModul;
 use App\Services\modul\DeleteModul;
@@ -19,7 +18,7 @@ class ModulController extends Controller
 
     public function index(): Collection
     {
-        return  Modul::all(['id', 'title', 'created_at', 'updated_at']);
+        return  Modul::all(['id', 'title', 'description', 'created_at', 'updated_at']);
     }
 
     public function store(Request $request): JsonResponse

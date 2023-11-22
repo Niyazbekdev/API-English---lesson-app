@@ -28,6 +28,7 @@ class UpdateContent extends BaseServices
         $this->validate($data);
 
         $content = Content::findOrFail($data['id']);
+
         $content->update([
             'title' => $data['title'],
             'description' => $data['description'],

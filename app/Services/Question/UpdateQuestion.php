@@ -24,11 +24,14 @@ class UpdateQuestion extends BaseServices
     public function execute($data): bool
     {
         $this->validate($data);
+
         $question = Question::findOrFail($data['id']);
+
         $question->update([
             'title' => $data['title'],
             'help' => $data['help']
         ]);
+
         return true;
     }
 }

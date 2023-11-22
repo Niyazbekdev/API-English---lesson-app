@@ -12,7 +12,7 @@ class Question extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ["title", "question_type_id", "help", "questionable_id", "questionable_type"];
+    protected $fillable = ['title', 'question_type_id', 'help', 'questionable_id', 'questionable_type'];
 
     public array $translatable = ['title', 'help'];
 
@@ -30,4 +30,10 @@ class Question extends Model
     {
         return $this->belongsTo(Lesson::class);
     }
+
+    public function questionType(): BelongsTo
+    {
+        return $this->belongsTo(QuestionType::class);
+    }
+
 }

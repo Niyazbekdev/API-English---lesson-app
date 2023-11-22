@@ -13,10 +13,15 @@ class Quiz extends Model
 
     protected $fillable = ['title', 'description'];
 
-    public array $translatable = ["title", "description"];
+    public array $translatable = ['title', 'description'];
 
     public function questions(): MorphMany
     {
         return $this->morphMany(Question::class, 'questionable');
+    }
+
+    public function results(): MorphMany
+    {
+        return $this->morphMany(Result::class, 'resultable');
     }
 }

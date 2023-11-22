@@ -12,19 +12,19 @@ class QuestionTypeSeeder extends Seeder
     public function run(): void
     {
         QuestionType::create([
-            'name' => 'Simple'
+            'title' => 'Simple'
         ]);
         QuestionType::create([
-            'name' => 'Multiple choice'
+            'title' => 'Multiple choice'
         ]);
         QuestionType::create([
-            'name' => 'Sequence'
+            'title' => 'Sequence'
         ]);
         QuestionType::create([
-            'name' => 'Drag_and_drop'
+            'title' => 'Drag_and_drop'
         ]);
         QuestionType::create([
-            'name' => 'Input'
+            'title' => 'Input'
         ]);
     }
 }

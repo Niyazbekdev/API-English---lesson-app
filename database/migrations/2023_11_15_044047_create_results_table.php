@@ -14,9 +14,13 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained('users');
-            $table->foreignIdFor(Question::class)->constrained('questions');
-            $table->boolean('is_correct');
+            $table->foreignIdFor(User::class)->constrained('users')->cascadeOnDelete();
+            $table->morphs('resultable');
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('complated_at')->nullable();
+            $table->unsignedSmallInteger('questions_count');
+            $table->unsignedSmallInteger('correct_questions_count')->nullable();
+            $table->unsignedSmallInteger('incorrect_questions_count')->nullable();
             $table->timestamps();
         });
     }

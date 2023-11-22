@@ -25,7 +25,9 @@ class LoginAdmin extends BaseServices
     public function execute(array $data):array
     {
         $this->validate($data);
+
         $user = User::where('phone', $data['phone'])->first();
+
         $password = Hash::check($data['password'], $user->password);
 
         if(!$user or !$password){
@@ -33,6 +35,7 @@ class LoginAdmin extends BaseServices
         }
 
         $token = $user->CreateToken('user model', ['admin'])->plainTextToken;
+
         return [$user, $token];
     }
 }

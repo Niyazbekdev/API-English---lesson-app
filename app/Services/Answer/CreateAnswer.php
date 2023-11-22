@@ -2,7 +2,6 @@
 
 namespace App\Services\Answer;
 
-
 use App\Models\Answer;
 use App\Models\Question;
 use App\Services\BaseServices;
@@ -28,21 +27,19 @@ class CreateAnswer extends BaseServices
         $i = 0;
 
         $sequence = Answer::where('question_id',$question['id'])->get();
-        $arr = [];
+
         for($j = 0; $j < count($sequence); $j++){
-            $arr [] = $sequence;
             $i++;
         }
 
         $this->validate($data);
+
         $question->answers()->create([
             'answer' => $data['answer'],
             'position' => $i,
             'drag_text' => $data['drag_text'],
             'is_correct' => $data['is_correct'],
         ]);
-
-
 
         return true;
     }

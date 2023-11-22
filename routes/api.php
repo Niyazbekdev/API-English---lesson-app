@@ -10,8 +10,8 @@ use App\Http\Controllers\ModulController;
 use App\Http\Controllers\LessonQuestionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\QuestionOptionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\ResultController;
@@ -19,18 +19,15 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('admins/users', function (Request $request){
-   return $request->user();
-});
-
-Route::post('admins/admins',[UserController::class, 'store']);
-Route::post('users/signUp', [AuthController::class, 'register']);
-Route::post('getCode', [AuthController::class, 'verifyCode']);
-Route::post('signIn', [AuthController::class, 'login']);
+Route::post('admins/admins',[UserController::class, 'login']);
 Route::post('admins/logOut', [UserController::class, 'logOut']);
 
 Route::middleware(['auth:sanctum'])->prefix('admins')->group(function (){
-    Route::get('allusers',[UserController::class, 'allUsers']);
+
+    Route::get('users', function (Request $request){
+        return $request->user();
+    });
+
     Route::apiResources([
         'quizzes' => QuizController::class,
         'quizzes.questions' => QuizQuestionController::class,
@@ -47,8 +44,19 @@ Route::middleware(['auth:sanctum'])->prefix('admins')->group(function (){
     Route::apiResource('lessons.contents', ContentController::class)->shallow();
     Route::apiResource('questions.answers', AnswerController::class)->shallow();
     Route::patch('answers-position',[OptionController::class, 'update']);
+    Route::get('orders',[OrderController::class, 'index']);
 });
-Route::middleware(['auth:sanctum'])->prefix('users')->group(function (){
-    Route::apiResource('quizzes/',QuizController::class);
 
+Route::post('users/signUp', [AuthController::class, 'register']);
+Route::post('users/signIn', [AuthController::class, 'login']);
+
+
+Route::middleware(['auth:sanctum'])->prefix('users')->group(function (){
+    Route::apiResources([
+        'quizzes' => QuizController::class,
+        'quizzes.questions' => QuizQuestionController::class,
+        'moduls' => ModulController::class,
+        'moduls.lessons' => LessonController::class,
+
+    ]);
 });

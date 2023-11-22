@@ -13,6 +13,7 @@ class CreateModul extends BaseServices
     {
         return [
             'title' => 'required',
+            'description' => 'required',
         ];
     }
 
@@ -24,9 +25,12 @@ class CreateModul extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         Modul::create([
             'title' => $data['title'],
+            'description' => $data['description']
         ]);
+
         return true;
     }
 }

@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TypeLesson extends Model
 {
     use HasFactory;
-    protected $fillable = ["title"];
+
+    protected $fillable = ['title'];
 
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class);
     }
+
 }

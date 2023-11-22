@@ -24,8 +24,11 @@ class DeleteContent extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         $content = Content::findOrFail($data['id']);
+
         $content->delete();
+
         return true;
     }
 }

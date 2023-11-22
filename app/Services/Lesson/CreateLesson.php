@@ -13,8 +13,8 @@ class CreateLesson extends BaseServices
     {
         return [
             'modul_id' => 'required,exists:moduls,id',
+            'type_lesson_id' => 'required',
             'title' => 'required',
-            'type_lesson_id' => 'required'
         ];
     }
 
@@ -24,11 +24,13 @@ class CreateLesson extends BaseServices
     public function execute(array $data, Modul $modul): bool
     {
         $this->validate($data);
+
         $modul->lessons()->create([
             'modul_id' => $modul['id'],
             'title' => $data['title'],
             'type_lesson_id' => $data['type_lesson_id']
         ]);
+
         return true;
     }
 }

@@ -46,6 +46,11 @@ class AnswerController extends Controller
             return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
+        }catch (ModelNotFoundException){
+            return $this->respondNotFound();
+        }catch (Exception $exception){
+            $this->setHttpStatusCode($exception->getCode());
+            return $this->respondError($exception->getMessage());
         }
     }
 
@@ -66,7 +71,7 @@ class AnswerController extends Controller
         }
     }
 
-    public function option(Request $request, string $id)
+    public function option(Request $request, string $id): JsonResponse
     {
         try {
             app(UpdateOption::class)->execute([
@@ -76,6 +81,11 @@ class AnswerController extends Controller
             return $this->respondSuccess();
         }catch (ValidationException $exception){
             return $this->respondValidatorFailed($exception->validator);
+        }catch (ModelNotFoundException){
+            return $this->respondNotFound();
+        }catch (Exception $exception){
+            $this->setHttpStatusCode($exception->getCode());
+            return $this->respondError($exception->getMessage());
         }
     }
 }

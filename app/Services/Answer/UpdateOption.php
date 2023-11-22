@@ -25,6 +25,7 @@ class UpdateOption extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         $i = 0;
 
         foreach ($data['answers'] as $answer_id){
@@ -34,6 +35,7 @@ class UpdateOption extends BaseServices
 
             $i++;
         }
+
         return true;
     }
 }

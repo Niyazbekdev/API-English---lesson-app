@@ -23,11 +23,13 @@ class CreateLessonQuestion extends BaseServices
     public function execute(array $data, Lesson $lesson): bool
     {
         $this->validate($data);
+
         $lesson->questions()->create([
             'title' => $data['title'],
             'question_type_id' => $data['question_type_id'],
             'help' => $data['help'],
         ]);
+
         return true;
     }
 }

@@ -26,11 +26,14 @@ class UpdateQuiz extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         $quiz = Quiz::findOrFail($data['id']);
+
         $quiz->update([
             'title' => $data['title'],
             'description' => $data['description']
         ]);
+
         return true;
     }
 }

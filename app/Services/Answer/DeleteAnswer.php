@@ -23,8 +23,11 @@ class DeleteAnswer extends BaseServices
     public function execute(array $data): bool
     {
         $this->validate($data);
+
         $answer = Answer::where('id', $data['id'])->first();
+
         $answer->delete();
+
         return true;
     }
 }

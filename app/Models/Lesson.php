@@ -13,14 +13,15 @@ class Lesson extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ["modul_id", "title", "type_lesson_id"];
+    protected $fillable = ['modul_id', 'title', 'type_lesson_id'];
 
-    public array $translatable = ["title"];
+    public array $translatable = ['title'];
 
     public function questions(): MorphMany
     {
         return $this->morphMany(Question::class, 'questionable');
     }
+
     public function modul(): BelongsTo
     {
         return $this->belongsTo(Modul::class);
@@ -36,4 +37,8 @@ class Lesson extends Model
         return $this->hasMany(Content::class);
     }
 
+    public function results(): MorphMany
+    {
+        return $this->morphMany(Result::class, 'resultable');
+    }
 }
