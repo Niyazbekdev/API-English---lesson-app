@@ -18,7 +18,6 @@ use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserNotificationController;
 use App\Http\Controllers\UserOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +27,7 @@ Route::post('admins/logOut', [UserController::class, 'logOut']);
 
 Route::middleware(['auth:sanctum'])->prefix('admins')->group(function (){
 
-    Route::get('users', function (Request $request){
+    Route::get('getMe', function (Request $request){
         return $request->user();
     });
 
@@ -55,8 +54,14 @@ Route::middleware(['auth:sanctum'])->prefix('admins')->group(function (){
 Route::post('users/signUp', [AuthController::class, 'register']);
 Route::post('users/signIn', [AuthController::class, 'login']);
 
-
 Route::middleware(['auth:sanctum'])->prefix('users')->group(function (){
+    Route::get('getMe', function (Request $request){
+        return $request->user();
+    });
+
+    Route::post('profiles', [AuthController::class, 'profile']);
+
+    Route::post('logOut', [AuthController::class, 'logOut']);
     Route::apiResources([
         'quizzes' => QuizController::class,
         'quizzes.questions' => QuizQuestionController::class,
