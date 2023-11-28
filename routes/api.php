@@ -19,6 +19,7 @@ use App\Http\Controllers\RateController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserNotificationController;
+use App\Http\Controllers\UserOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,11 +64,13 @@ Route::middleware(['auth:sanctum'])->prefix('users')->group(function (){
         'moduls.lessons' => LessonController::class,
        // 'results.questions' => ResultController::class,
         //'quizzes.results' => QuizResultController::class,
-        'notifications' => UserNotificationController::class,
+        'notifications' =>NotificationController::class,
         'lessons.questions' => LessonQuestionController::class,
         'lessons' => LessonController::class,
         'lessons.contents' => ContentController::class,
         'payments' => PaymentController::class,
+        'rates' => RateController::class,
+        'rates.orders' => UserOrderController::class,
     ]);
     Route::post('results/{result}/questions/{question}', [ResultController::class, 'store']);
     Route::post('results/{result}/answers', [ResultController::class, 'store']);

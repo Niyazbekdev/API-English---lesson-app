@@ -33,6 +33,11 @@ class NotificationController extends Controller
         }
     }
 
+    public function show(string $notification)
+    {
+        return Notification::where('id', $notification)->first();
+    }
+
     public function destroy(string $notification): JsonResponse
     {
         try {
