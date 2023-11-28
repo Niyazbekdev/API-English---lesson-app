@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LessonResource;
+use App\Models\Lesson;
 use App\Models\Modul;
 use App\Services\Lesson\CreateLesson;
 use App\Services\Lesson\DeleteLesson;
@@ -47,5 +49,10 @@ class LessonController extends Controller
             $this->setHttpStatusCode($exception->getCode());
             return $this->respondError($exception->getMessage());
         }
+    }
+
+    public function show(string $lesson): LessonResource
+    {
+        return new LessonResource(Lesson::findOrFail($lesson));
     }
 }

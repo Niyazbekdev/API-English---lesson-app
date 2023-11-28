@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @mixin IdeHelperQuiz
+ */
 class Quiz extends Model
 {
     use HasFactory, HasTranslations;

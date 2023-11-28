@@ -15,6 +15,8 @@ return new class extends Migration
             $table->foreignIdFor(Result::class)->constrained('results');
             $table->foreignIdFor(Question::class)->constrained('questions');
             $table->json('answers');
+            $table->json('drags')->nullable();
+            $table->text('answer_text')->nullable();
             $table->boolean('is_answered')->default(false);
             $table->boolean('is_correct')->nullable();
         });

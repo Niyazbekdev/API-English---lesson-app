@@ -16,7 +16,7 @@ class LessonQuestionController extends Controller
 
     public function index(Lesson $lesson): Collection
     {
-        return $lesson->questions()->get();
+        return  $lesson->questions()->get();
     }
 
     public function store(Request $request, Lesson $lesson): JsonResponse

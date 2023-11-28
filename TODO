@@ -4,17 +4,9 @@ Result pustoy controller
 
 Lesson menen controllerdi durislaw kerek
 
-        $lessons = Lesson::where('modul_id',$data['id'])->get();
+questions resource ni durislaw kerek
 
-        foreach ($lessons as $lesson){
-            Lesson::find($lesson['id'])->delete();
+lesson get by id
 
-            if($lesson['type_lesson_id'] == 2){
-                $contents = Content::where('lesson_id', $lesson['id']);
-
-                foreach ($contents as $content){
-                    Content::find($content['id'])->delete();
-                }
-            }
-        }
+lesson questions
 

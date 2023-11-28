@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @mixin IdeHelperQuestion
+ */
 class Question extends Model
 {
     use HasFactory, HasTranslations;

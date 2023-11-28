@@ -18,7 +18,7 @@ return new class extends Migration
             $table->morphs('resultable');
             $table->timestamp('started_at')->nullable();
             $table->timestamp('complated_at')->nullable();
-            $table->unsignedSmallInteger('questions_count');
+            $table->unsignedSmallInteger('questions_count')->nullable();
             $table->unsignedSmallInteger('correct_questions_count')->nullable();
             $table->unsignedSmallInteger('incorrect_questions_count')->nullable();
             $table->timestamps();

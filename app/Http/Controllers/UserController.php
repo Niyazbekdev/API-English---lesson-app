@@ -29,6 +29,7 @@ class UserController extends Controller
                 'data' => [
                     'id' => $user->id,
                     'name' => $user->name,
+                    'phone' => $user->phone,
                     'token' => $token
                 ]
             ];

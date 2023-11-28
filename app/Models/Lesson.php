@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @mixin IdeHelperLesson
+ */
 class Lesson extends Model
 {
     use HasFactory, HasTranslations;

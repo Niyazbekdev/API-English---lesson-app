@@ -30,7 +30,7 @@ class LoginAdmin extends BaseServices
 
         $password = Hash::check($data['password'], $user->password);
 
-        if(!$user or !$password){
+        if(!$user or $password){
             throw new Exception('user not found or password in correct', 401);
         }
 

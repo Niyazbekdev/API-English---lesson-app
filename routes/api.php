@@ -11,11 +11,14 @@ use App\Http\Controllers\LessonQuestionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
+use App\Http\Controllers\RateController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserNotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +41,7 @@ Route::middleware(['auth:sanctum'])->prefix('admins')->group(function (){
         'images' => ImageController::class,
         'audios' => AudioController::class,
         'notifications' => NotificationController::class,
+        'rates' => RateController::class,
     ]);
 
     Route::apiResource('moduls.lessons', LessonController::class)->shallow();
@@ -57,6 +61,17 @@ Route::middleware(['auth:sanctum'])->prefix('users')->group(function (){
         'quizzes.questions' => QuizQuestionController::class,
         'moduls' => ModulController::class,
         'moduls.lessons' => LessonController::class,
-
+       // 'results.questions' => ResultController::class,
+        //'quizzes.results' => QuizResultController::class,
+        'notifications' => UserNotificationController::class,
+        'lessons.questions' => LessonQuestionController::class,
+        'lessons' => LessonController::class,
+        'lessons.contents' => ContentController::class,
+        'payments' => PaymentController::class,
     ]);
+    Route::post('results/{result}/questions/{question}', [ResultController::class, 'store']);
+    Route::post('results/{result}/answers', [ResultController::class, 'store']);
+    Route::post('quizzes/{quiz}/results', [ResultController::class, 'startQuiz']);
+    Route::post('lessons/{lesson}/results', [ResultController::class, 'startLesson']);
+    Route::get('results', [ResultController::class, 'statistic']);
 });
