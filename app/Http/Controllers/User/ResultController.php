@@ -21,40 +21,9 @@ class ResultController extends Controller
 {
     use JsonRespondController;
 
-    public function startQuiz(Quiz $quiz): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
-        try {
-            app(StartQuiz::class)->execute($quiz);
-            return $this->respondSuccess();
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
+        return ResultResource::collection(Result::get());
     }
 
-    public function startLesson(Lesson $lesson): JsonResponse
-    {
-        try {
-            app(StartLesson::class)->execute($lesson);
-            return $this->respondSuccess();
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
-    }
-
-    public function store(Request $request, Result $result, Question $question): JsonResponse
-    {
-        try {
-            app(AskAnswers::class)->execute([
-                'answers' => $request->answers,
-            ], $result, $question);
-            return $this->respondSuccess();
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
-    }
-
-    public function statistic(): AnonymousResourceCollection
-    {
-        return ResultResource::collection(Result::all());
-    }
 }

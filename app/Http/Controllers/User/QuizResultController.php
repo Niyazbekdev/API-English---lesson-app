@@ -14,10 +14,10 @@ class QuizResultController extends Controller
 {
     use JsonRespondController;
 
-    public function store(Request $request, Quiz $quiz): JsonResponse
+    public function store(Quiz $quiz): JsonResponse
     {
         try {
-            app(StartQuiz::class)->execute($request->all(), $quiz);
+            app(StartQuiz::class)->execute($quiz);
             return $this->respondSuccess();
         }catch (ValidationException $exception){
             return  $this->respondValidatorFailed($exception->validator);

@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\QuizQuestionController;
 use App\Http\Controllers\Admin\RateController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\User\ResultController;
+use Illuminate\Http\Request;
 
 Route::post('admins/admins',[UserController::class, 'login']);
 Route::post('admins/logOut', [UserController::class, 'logOut']);

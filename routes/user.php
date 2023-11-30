@@ -15,11 +15,13 @@ use App\Http\Controllers\User\QuizResultController;
 use App\Http\Controllers\User\RateController;
 use App\Http\Controllers\User\ResultController;
 use App\Http\Controllers\User\ResultQuestionController;
+use Illuminate\Http\Request;
 
 Route::post('users/signUp', [AuthController::class, 'register']);
 Route::post('users/signIn', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->prefix('users')->group(function (){
+
     Route::get('getMe', function (Request $request){
         return $request->user();
     });
@@ -36,7 +38,7 @@ Route::middleware(['auth:sanctum'])->prefix('users')->group(function (){
     Route::apiResource('notifications', NotificationController::class);
     Route::apiResource('payments', PaymentController::class);
     Route::apiResource('rates', RateController::class);
-    Route::apiResource('resulsts', ResultController::class);
+    Route::apiResource('results', ResultController::class);
     Route::apiResource('quizzes.results', QuizResultController::class);
     Route::apiResource('lessons.results', LessonResultController::class);
     Route::apiResource('results.questions', ResultQuestionController::class);

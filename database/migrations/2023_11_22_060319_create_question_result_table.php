@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('question_result', function (Blueprint $table) {
             $table->foreignIdFor(Result::class)->constrained('results');
             $table->foreignIdFor(Question::class)->constrained('questions');
-            $table->json('answers');
+            $table->json('answers')->nullable();
             $table->json('drags')->nullable();
             $table->text('answer_text')->nullable();
             $table->boolean('is_answered')->default(false);

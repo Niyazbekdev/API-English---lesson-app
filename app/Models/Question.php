@@ -39,4 +39,15 @@ class Question extends Model
         return $this->belongsTo(QuestionType::class);
     }
 
+    public function drags(): HasMany
+    {
+        return $this->hasMany(Answer::class)
+            ->select(['drag_text', 'question_id'])
+            ->orderBy('position', 'asc');
+    }
+
+    public function randomAnswers(): HasMany
+    {
+        return $this->hasMany(Answer::class)->inRandomOrder();
+    }
 }

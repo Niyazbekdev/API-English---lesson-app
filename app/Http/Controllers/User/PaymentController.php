@@ -12,8 +12,4 @@ class PaymentController extends Controller
         return Payment::get();
     }
 
-    public function store()
-    {
-
-    }
 }
