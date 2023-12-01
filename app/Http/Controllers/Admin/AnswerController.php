@@ -21,15 +21,13 @@ class AnswerController extends Controller
 {
     use JsonRespondController;
 
-    public function index(Request $request, Question $question): JsonResponse|AnonymousResourceCollection
+    public function index(Request $request, Question $question): AnonymousResourceCollection
     {
-        try {
-            $answer = $question->answers()->paginate($request->limit) ?? $question->answers()->paginate();
-            return AnswerResource::collection($answer);
-        }catch (Exception $exception){
-            $this->setHttpStatusCode($exception->getCode());
-            return $this->respondError($exception->getMessage());
-        }
+        $answer =  $question->answers()->when($request->search ?? null, function ($query, $search) {
+        $query->search($search);
+        })->paginate($request->limit ?? 10);
+
+        return AnswerResource::collection($answer);
     }
 
     public function store(Request $request, Question $question): JsonResponse

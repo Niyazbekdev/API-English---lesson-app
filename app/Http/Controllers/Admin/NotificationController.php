@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NotificationResource;
 use App\Models\Notification;
 use App\Services\Notification\CreateNotification;
 use App\Services\Notification\DeleteNotifications;
 use App\Traits\JsonRespondController;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Validation\ValidationException;
 
 class NotificationController extends Controller
@@ -19,9 +20,13 @@ class NotificationController extends Controller
 
     use JsonRespondController;
 
-    public function index(): Collection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        return Notification::all(['id', 'title', 'description', 'created_at', 'updated_at']);
+        $notification = Notification::when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
+
+        return NotificationResource::collection($notification);
     }
 
     public function store(Request $request): JsonResponse

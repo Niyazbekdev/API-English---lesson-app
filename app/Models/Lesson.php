@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,5 +44,10 @@ class Lesson extends Model
     public function results(): MorphMany
     {
         return $this->morphMany(Result::class, 'resultable');
+    }
+
+    public function scopeSearch(Builder $builder, $search)
+    {
+        $builder->where('title', 'like', "%{$search}%");
     }
 }

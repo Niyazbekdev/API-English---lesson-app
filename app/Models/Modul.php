@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,5 +28,11 @@ class Modul extends Model
     public function user(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function scopeSearch(Builder $builder, $search)
+    {
+        $builder->where('title', 'like', "%{$search}%")
+            ->OrWhere('description', 'like', "%{$search}%");
     }
 }

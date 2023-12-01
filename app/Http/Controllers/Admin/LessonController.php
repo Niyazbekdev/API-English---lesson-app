@@ -20,15 +20,13 @@ class LessonController extends Controller
 {
     use JsonRespondController;
 
-    public function index(Request $request, Modul $modul): JsonResponse|AnonymousResourceCollection
+    public function index(Request $request, Modul $modul): AnonymousResourceCollection
     {
-        try {
-            $lesson = $modul->lessons()->paginate($request->limit) ?? $modul->lessons()->paginate();
-            return LessonResource::collection($lesson);
-        }catch (Exception $exception){
-            $this->setHttpStatusCode($exception->getCode());
-            return $this->respondError($exception->getMessage());
-        }
+        $lesson = $modul->lessons()->when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
+
+        return LessonResource::collection($lesson);
     }
 
     public function store(Request $request, Modul $modul): JsonResponse

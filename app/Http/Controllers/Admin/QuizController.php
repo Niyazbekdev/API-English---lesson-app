@@ -18,17 +18,13 @@ class QuizController extends Controller
 {
     use JsonRespondController;
 
-    public function index(Request $request): JsonResponse|AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        try {
-            $quiz = Quiz::paginate($request->limit) ?? Quiz::paginate();
+        $quiz = Quiz::when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
 
-            return QuizResource::collection($quiz);
-        }catch (Exception $exception){
-            $this->setHttpStatusCode($exception->getCode());
-
-            return $this->respondError($exception->getMessage());
-        }
+        return QuizResource::collection($quiz);
     }
 
     public function update(Request $request,string $quiz): JsonResponse

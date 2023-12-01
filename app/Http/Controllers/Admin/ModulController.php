@@ -22,13 +22,11 @@ class ModulController extends Controller
 
     public function index(Request $request): JsonResponse|AnonymousResourceCollection
     {
-        try {
-            $modul = Modul::paginate($request->limit) ?? Modul::paginate();
-            return ModulResource::collection($modul);
-        }catch (Exception $exception){
-            $this->setHttpStatusCode($exception->getCode());
-            return $this->respondError($exception->getMessage());
-        }
+        $modul = Modul::when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
+
+        return ModulResource::collection($modul);
     }
 
     public function store(Request $request): JsonResponse

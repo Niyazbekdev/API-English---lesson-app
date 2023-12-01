@@ -19,9 +19,12 @@ class AudioController extends Controller
 {
     use JsonRespondController;
 
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        return AudioResource::collection(Audio::all(['id', 'name', 'created_at', 'updated_at']));
+        $audio = Audio::when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
+        return AudioResource::collection($audio);
     }
 
     public function store(Request $request): JsonResponse

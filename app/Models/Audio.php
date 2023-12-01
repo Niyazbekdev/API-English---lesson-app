@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,4 +20,8 @@ class Audio extends Model
         return config('app.url') .'/storage/audios/'. $this->image;
     }
 
+    public function scopeSearch(Builder $builder, $search)
+    {
+        $builder->where('name', 'like', "%{$search}%");
+    }
 }

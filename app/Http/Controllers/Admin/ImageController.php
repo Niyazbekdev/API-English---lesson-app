@@ -19,10 +19,15 @@ class ImageController extends Controller
 {
     use JsonRespondController;
 
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        return ImageResource::collection(Image::all(['id', 'image']));
+        $image = Image::when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
+
+        return ImageResource::collection($image);
     }
+
     public function store(Request $request): JsonResponse
     {
         try {

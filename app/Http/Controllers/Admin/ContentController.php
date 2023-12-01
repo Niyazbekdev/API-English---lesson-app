@@ -7,7 +7,6 @@ use App\Http\Resources\ContentResource;
 use App\Models\Lesson;
 use App\Services\Content\CreateContent;
 use App\Services\Content\DeleteContent;
-use App\Services\Content\IndexContent;
 use App\Services\Content\UpdateContent;
 use App\Traits\JsonRespondController;
 use Exception;
@@ -21,16 +20,13 @@ class ContentController extends Controller
 {
     use JsonRespondController;
 
-    public function index(Request $request, Lesson $lesson): JsonResponse|AnonymousResourceCollection
+    public function index(Request $request, Lesson $lesson): AnonymousResourceCollection
     {
-        try {
-            $content = app(IndexContent::class)->execute([
-                'limit' => $request->limit,
-            ], $lesson);
-            return ContentResource::collection($content);
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
+        $content = $lesson->contents()->when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
+
+        return ContentResource::collection($content);
     }
 
     public function store(Request $request, Lesson $lesson): JsonResponse

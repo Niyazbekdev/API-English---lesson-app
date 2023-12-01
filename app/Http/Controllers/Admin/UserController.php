@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Services\admin\AllUser;
+use App\Models\User;
 use App\Services\admin\DeleteUser;
 use App\Traits\JsonRespondController;
 use Exception;
@@ -18,16 +18,13 @@ class UserController extends Controller
 {
     use JsonRespondController;
 
-    public function index(Request $request): JsonResponse|AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
-        try {
-            $user = app(AllUser::class)->execute([
-                'limit' => $request->limit,
-            ]);
-            return UserResource::collection($user);
-        }catch (ValidationException $exception){
-            return $this->respondValidatorFailed($exception->validator);
-        }
+        $user = User::when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
+
+        return UserResource::collection($user);
     }
 
     public function destroy(string $user): JsonResponse

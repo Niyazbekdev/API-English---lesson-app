@@ -16,9 +16,11 @@ class RateController extends Controller
 {
     use JsonRespondController;
 
-    public function index()
+    public function index(Request $request)
     {
-        return Rate::get();
+        return Rate::when($request->search ?? null, function ($query, $search) {
+            $query->search($search);
+        })->paginate($request->limit ?? 10);
     }
 
     public function update(Request $request, string $rate): JsonResponse
